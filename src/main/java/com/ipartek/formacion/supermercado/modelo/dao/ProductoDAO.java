@@ -148,9 +148,10 @@ public class ProductoDAO implements IProductoDAO{
 				}
 			}
 				
-		} catch (SQLException e) {
-			LOG.error(e); //e.printStackTrace();
-		}
+		} /* catch (Exception e) {
+		LOG.error(e); 
+		}*/ 
+		//quitamos el catch para que la excepción la recoja ProductoRestController
 		
 		return pojo;		
 	}
