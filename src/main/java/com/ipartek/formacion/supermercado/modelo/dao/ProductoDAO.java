@@ -204,9 +204,11 @@ public class ProductoDAO implements IProductoDAO{
 				throw new Exception("No se puede eliminar el producto con id " + id);
 			}
 
-		} catch (Exception e) {
+		}/* catch (Exception e) {
 			LOG.error(e); 
-		}
+		}*/ 
+		//quitamos el catch para que la excepción la recoja ProductoRestController si intentamos borrar 2 veces el mismo objeto, 
+		// de esta forma, recibiremos también el mensaje de la excepción
 		
 		return registro;
 	}
