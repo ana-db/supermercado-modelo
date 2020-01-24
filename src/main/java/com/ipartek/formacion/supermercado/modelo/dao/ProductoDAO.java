@@ -438,14 +438,15 @@ public class ProductoDAO implements IProductoDAO{
 	
 	
 	
-	public List<Producto> getAllOrdenado(String orden) {
+	public List<Producto> getAllOrdenado(String orden, String columna) {
 		
 		ArrayList<Producto> lista = new ArrayList<Producto>();
 
 		try (Connection con = ConnectionManager.getConnection();
-				CallableStatement cs = con.prepareCall("{ CALL pa_producto_ordenado(?) }");) {
+				CallableStatement cs = con.prepareCall("{ CALL pa_producto_getall_ordenado(?, ?) }");) {
 
 			cs.setString(1, orden);
+			cs.setString(2, columna);
 
 			try (ResultSet rs = cs.executeQuery()) {
 				while (rs.next()) {
