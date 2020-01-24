@@ -61,7 +61,7 @@ public class ProductoDAO implements IProductoDAO{
 														" FROM producto p, usuario u, categoria c " + 
 														" WHERE p.id_usuario = u.id AND p.id_categoria = c.id AND p.id= ? AND u.id= ?" + 
 														" ORDER BY p.id DESC LIMIT 500;";
-												
+													
 	
 	private ProductoDAO() {
 		super();
@@ -434,6 +434,30 @@ public class ProductoDAO implements IProductoDAO{
 		}
 
 		return registros;
+	}
+	
+	
+	
+	public List<Producto> getAllOrdenado(String orden) {
+		
+		ArrayList<Producto> lista = new ArrayList<Producto>();
+
+		try (Connection con = ConnectionManager.getConnection();
+				CallableStatement cs = con.prepareCall("{ CALL pa_producto_ordenado(?) }");) {
+
+			cs.setString(1, orden);
+
+			try (ResultSet rs = cs.executeQuery()) {
+				while (rs.next()) {
+					lista.add(mapper(rs));
+				}
+			}
+
+		} catch (SQLException e) {
+			LOG.error(e); 
+		}
+
+		return lista;
 	}
 
 }
